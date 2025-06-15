@@ -26,3 +26,14 @@ if (Config.Output_songlist)
     File.WriteAllLines("songs.tsv", p.ToArray());
 }
 ```
+
+# Generating the database
+To generate the database
+
+```bash
+cd python
+uv sync
+uv run create_sqlite_db.py
+```
+
+The db will be brotli-compressed and placed into the `web/data` directory.

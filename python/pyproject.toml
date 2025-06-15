@@ -1,0 +1,5 @@
+[project]
+name = "iidx-db"
+version = "1.0.0"
+description = "Create SQLite DB for iidx game data."
+dependencies = ["brotli>=1.1,<2"]
