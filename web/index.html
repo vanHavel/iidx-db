@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>iidx Infinitas Chart Database</title>
+    </head>
+    <body>
+        <div id="searchParams">
+            <form id="searchForm">
+                <div id="textParams">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" placeholder="Search by title...">
+                    <label for="artist">Artist:</label>
+                    <input type="text" id="artist" name="artist" placeholder="Search by artist...">
+                    <label for="genre">Genre:</label>
+                    <input type="text" id="genre" name="genre" placeholder="Search by genre...">
+                </div>
+                <div id="dropDownParams">
+                    <label for="difficulty">Difficulty:</label>
+                    <select id="difficulty" name="difficulty">
+                        <option value="">All</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Hyper">Hyper</option>
+                        <option value="Another">Another</option>
+                        <option value="Leggendaria">Leggendaria</option>
+                    </select>
+                    <label for ="level">Level:</label>
+                    <select id="level" name="level">
+                        <option value="">All</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <label for="type">Type:</label>
+                    <select id="type" name="type">
+                        <option value="">All</option>
+                        <option value="Single">Single</option>
+                        <option value="Double">Double</option>
+                    </select>
+                </div>
+                <div id="orderSubmit">
+                    <label for="order">Order By:</label>
+                    <select id="order" name="order">
+                        <option value="title">Title</option>
+                        <option value="level_asc">Level (Lowest)</option>
+                        <option value="level_desc">Level (Highest)</option>
+                        <option value="BPM_asc">BPM (Increasing)</option>
+                        <option value="BPM_desc">BPM (Decreasing)</option>
+                        <option value="note_asc">Note Count (Increasing)</option>
+                        <option value="note_desc">Note Count (Decreasing)</option>
+                    </select>
+                    <button type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+        <div id="results">
+            <!-- Results will be displayed here after search -->
+        </div>
+        <div id="navigation">
+            <button id="firstPage" disabled>&lt;&lt;</button>
+            <button id="prevPage" disabled>&lt;</button>
+            <span>Showing songs </span>
+            <span id="firstOffset">1</span>
+            <span> to </span>
+            <span id="lastOffset">50</span>
+            <span> of </span>
+            <span id="totalCount">500</span>
+            <button id="nextPage" disabled>&gt;</button>
+            <button id="lastPage" disabled>&gt;&gt;</button>
+        </div>
+        <script type="module" src="main.js"></script>
+    </body>
+</html>

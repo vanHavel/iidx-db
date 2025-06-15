@@ -36,4 +36,17 @@ uv sync
 uv run create_sqlite_db.py
 ```
 
-The db will be brotli-compressed and placed into the `web/data` directory.
+The db will be brotli-compressed and placed into the `web/public` directory.
+
+# Running the dev server
+```bash
+cd web
+npx vite
+```
+
+# Building the web app
+```bash
+cd web
+npx vite build
+# serve the /dist directory with a web server, e.g. `python -m http.server /dist` from the root folder
+```
