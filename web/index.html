@@ -6,21 +6,20 @@
     </head>
     <body>
         <div id="searchParams">
-            <form id="searchForm">
-                <div id="textParams">
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" placeholder="Search by title...">
-                    <label for="artist">Artist:</label>
-                    <input type="text" id="artist" name="artist" placeholder="Search by artist...">
-                    <label for="genre">Genre:</label>
-                    <input type="text" id="genre" name="genre" placeholder="Search by genre...">
-                </div>
-                <div id="dropDownParams">
+            <div id="textParams">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="Search by title...">
+                <label for="artist">Artist:</label>
+                <input type="text" id="artist" name="artist" placeholder="Search by artist...">
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" name="genre" placeholder="Search by genre...">
+            </div>
+            <div id="dropDownParams">
                     <label for="difficulty">Difficulty:</label>
                     <select id="difficulty" name="difficulty">
                         <option value="">All</option>
                         <option value="Beginner">Beginner</option>
-                        <option value="Normal">Normal</option>
+                        <option value="Standard">Standard</option>
                         <option value="Hyper">Hyper</option>
                         <option value="Another">Another</option>
                         <option value="Leggendaria">Leggendaria</option>
@@ -41,8 +40,8 @@
                         <option value="11">11</option>
                         <option value="12">12</option>
                     </select>
-                    <label for="type">Type:</label>
-                    <select id="type" name="type">
+                    <label for="chart_type">Type:</label>
+                    <select id="chart_type" name="type">
                         <option value="">All</option>
                         <option value="Single">Single</option>
                         <option value="Double">Double</option>
@@ -59,9 +58,8 @@
                         <option value="note_asc">Note Count (Increasing)</option>
                         <option value="note_desc">Note Count (Decreasing)</option>
                     </select>
-                    <button type="submit">Search</button>
+                    <button type="button" id="search">Search</button>
                 </div>
-            </form>
         </div>
         <div id="results">
             <!-- Results will be displayed here after search -->
