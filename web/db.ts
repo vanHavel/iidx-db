@@ -25,27 +25,10 @@ async function loadDatabase() {
     return db;
 }
 
-function getQueryParams() {
-    const params = {}
-    for (const field of ['title', 'artist', 'genre', 'difficulty', 'level', 'chart_type', 'order']) {
-        const input = document.getElementById(field);
-        if (input.value.trim()) {
-            if (mappings[field]) {
-                params[`$${field}`] = mappings[field][input.value];
-            } else {
-                params[`$${field}`] = input.value.trim();
-            }
-        }
-    }
-    return params;
-}
 
-export async function getSongIds(page, pageSize = 50) {
-    const db = await loadDatabase();
-    const params = getQueryParams();
-    console.log("params", JSON.stringify(params, null, 2));
+function buildQuery(params, returnCount = false, sort = 's.title') {
     let query = `
-    SELECT s.id
+    SELECT ${returnCount ? 'COUNT(DISTINCT s.id) AS countSongs' : 's.id'}
     FROM song s
     JOIN song_search ss ON s.id = ss.rowid
     JOIN chart c ON s.id = c.id_song
@@ -60,12 +43,24 @@ export async function getSongIds(page, pageSize = 50) {
         query += ` AND c.${filter} = $${filter}`;
       }
     }
-    query += `
-    GROUP BY s.id
-    ORDER BY ${params.$order}
-    LIMIT ${pageSize}
-    OFFSET ${pageSize * (page - 1)}`;
 
+    if (!returnCount) {
+        query += `
+        GROUP BY s.id
+        ORDER BY ${sort}
+        LIMIT $limit
+        OFFSET $offset`;
+    }
+
+    return query;
+}
+
+export async function getSongIds(params, sort, page, pageSize) {
+    const db = await loadDatabase();
+    params.$limit = pageSize;
+    params.$offset = (page - 1) * pageSize;
+    console.log("params", JSON.stringify(params, null, 2));
+    let query = buildQuery(params, false, sort);
     let resultRows = [];
     console.log("Executing query:", query);
     db.exec({
@@ -75,12 +70,25 @@ export async function getSongIds(page, pageSize = 50) {
         resultRows: resultRows
     });
     console.log("resultRows", JSON.stringify(resultRows, null, 2));
-    return Array.from(resultRows).map(row => row.id);
+    let countQuery = buildQuery(params, true);
+    for (const paramToDrop of ['$limit', '$offset']) {
+        delete params[paramToDrop];
+    }
+    let countRows = [];
+    console.log("Executing count query:", countQuery);
+    db.exec({
+        sql: countQuery,
+        bind: params,
+        rowMode: 'object',
+        resultRows: countRows
+    });
+    const ids = Array.from(resultRows).map(row => row.id);
+    const totalCount = countRows[0].countSongs;
+    return [ids, totalCount];
 }
 
-export async function getSongInfo(songIds) {
+export async function getSongInfo(songIds, params) {
     const db = await loadDatabase();
-    const params = getQueryParams();
     let query = `
     SELECT s.*,
     c.level, c.note_count, c.difficulty, c.chart_type

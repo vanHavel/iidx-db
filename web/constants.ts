@@ -30,4 +30,4 @@ export const inverseMappings = Object.fromEntries(
 );
 
 
-export const pageSize = 10;
+export const pageSize = 20;
