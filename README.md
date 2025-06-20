@@ -36,7 +36,7 @@ uv sync
 uv run create_sqlite_db.py
 ```
 
-The db will be brotli-compressed and placed into the `web/public` directory.
+The db will be gzip-compressed and placed into the `web/public` directory.
 
 # Running the dev server
 ```bash

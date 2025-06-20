@@ -10,8 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sqlite.org/sqlite-wasm": "^3.50.1-build1",
-    "brotli-dec-wasm": "^2.3.0"
+    "@sqlite.org/sqlite-wasm": "^3.50.1-build1"
   },
   "devDependencies": {
     "vite": "^6.3.5"

@@ -74,8 +74,8 @@ if __name__ == '__main__':
     conn.close()
 
     with open(db_path, "rb") as db_file:
-        # vite dev server would automatically decompress .br files, so we use .brzip to avoid that
-        with open("../web/public/db.sqlite3.brzip", "wb") as brotli_file:
-            brotli_file.write(brotli.compress(db_file.read()))
+        # gzip compress the database file
+        with gzip.open("../web/public/db.sqlite3.gz", "wb") as gzip_file:
+            shutil.copyfileobj(db_file, gzip_file)
 
 
