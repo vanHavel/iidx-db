@@ -18,6 +18,10 @@ function getQueryParams() {
             }
         }
     }
+    // special case for title, as we search multiple columns we must make the entire fts5 query the parameter
+    if ('$title' in params) {
+        params.$title = `{title english_title} : ${params.$title}`;
+    }
     const sort = mappings['order'][document.getElementById('order').value];
     return [params, sort];
 }

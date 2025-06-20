@@ -33,7 +33,11 @@ function buildQuery(params, returnCount = false, sort = 's.title') {
     JOIN song_search ss ON s.id = ss.rowid
     JOIN chart c ON s.id = c.id_song
     WHERE 1=1`
-    for (const match of ['title', 'artist', 'genre']) {
+    // special case for title, as we search multiple columns in the fts5 table ($title is the full fts5 query)
+    if ('$title' in params) {
+        query += ` AND song_search MATCH $title`;
+    }
+    for (const match of ['artist', 'genre']) {
       if (`$${match}` in params) {
         query += ` AND ss.${match} MATCH $${match}`;
       }
@@ -114,6 +118,7 @@ function createSongInfo(rows) {
         if (!songs[row.id]) {
             songs[row.id] = {
                 title: row.title,
+                englishTitle: row.english_title,
                 artist: row.artist,
                 genre: row.genre,
                 min_bpm: row.min_bpm,

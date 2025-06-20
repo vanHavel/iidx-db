@@ -3,7 +3,7 @@ export function renderSongInfo(songIds, songInfo) {
     for (const id of songIds) {
         const song = songInfo[id];
         let li = document.createElement('li');
-        li.textContent = `${song.title} - ${song.artist} (${song.genre})`;
+        li.textContent = `${song.title}(${song.englishTitle}) - ${song.artist} (${song.genre})`;
         ul.appendChild(li);
     }
     return ul.outerHTML;

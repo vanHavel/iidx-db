@@ -30,6 +30,7 @@ export type ChartCollection = {
 
 export type Song = {
     title: string;
+    englishTitle?: string;
     artist: string;
     genre: string;
     min_bpm: number;
