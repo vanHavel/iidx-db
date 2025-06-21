@@ -26,16 +26,19 @@ async function loadDatabase() {
 }
 
 
-function buildQuery(params, returnCount = false, sort = 's.title') {
+function buildQuery(params, returnCount = false, sort = 's.english_title') {
     let query = `
     SELECT ${returnCount ? 'COUNT(DISTINCT s.id) AS countSongs' : 's.id'}
     FROM song s
     JOIN song_search ss ON s.id = ss.rowid
     JOIN chart c ON s.id = c.id_song
     WHERE 1=1`
-    // special case for title, as we search multiple columns in the fts5 table ($title is the full fts5 query)
     if ('$title' in params) {
-        query += ` AND song_search MATCH $title`;
+        // fts5 does not allow to mix MATCH queries with disjunctions, so we need to do a subquery...
+        query += ` AND (s.japanese_title LIKE '%' || $title || '%'
+            OR s.id IN (
+                SELECT id FROM song s JOIN song_search ss ON s.id = ss.rowid WHERE ss.english_title MATCH $title
+            ))`;
     }
     for (const match of ['artist', 'genre']) {
       if (`$${match}` in params) {
@@ -119,6 +122,7 @@ function createSongInfo(rows) {
             songs[row.id] = {
                 title: row.title,
                 englishTitle: row.english_title,
+                japaneseTitle: row.japanese_title,
                 artist: row.artist,
                 genre: row.genre,
                 min_bpm: row.min_bpm,

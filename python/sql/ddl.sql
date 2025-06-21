@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS song (
   id INTEGER PRIMARY KEY,
-  title TEXT NOT NULL,
-  english_title TEXT, --only set if different from title
+  english_title TEXT NOT NULL,
+  japanese_title TEXT, --only set if different from english_title
   artist TEXT NOT NULL,
   genre TEXT NOT NULL,
   min_bpm INTEGER NOT NULL,
@@ -22,7 +22,6 @@ CREATE TABLE IF NOT EXISTS chart (
 CREATE INDEX IF NOT EXISTS idx_chart_song ON chart (id_song);
 
 CREATE VIRTUAL TABLE IF NOT EXISTS song_search USING fts5(
-  title,
   english_title,
   artist,
   genre,
@@ -30,6 +29,6 @@ CREATE VIRTUAL TABLE IF NOT EXISTS song_search USING fts5(
   content_rowid='id',
 );
 CREATE TRIGGER IF NOT EXISTS song_search_insert AFTER INSERT ON song BEGIN
-  INSERT INTO song_search (rowid, title, english_title, artist, genre)
-  VALUES (new.id, new.title, new.english_title, new.artist, new.genre);
+  INSERT INTO song_search (rowid, english_title, artist, genre)
+  VALUES (new.id, new.english_title, new.artist, new.genre);
 END;

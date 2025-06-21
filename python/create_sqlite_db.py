@@ -3,7 +3,6 @@ import os.path
 import shutil
 import sqlite3
 
-import brotli
 
 if __name__ == '__main__':
     db_path = "data/db.sqlite3"
@@ -28,10 +27,10 @@ if __name__ == '__main__':
         if row_number == 0:
             continue
         fields = line.strip().split("\t")
-        _, title, english_title, artist, genre, level_arr, notes_arr, _, bpm_range, unlock_type = fields
+        _, japanese_title, english_title, artist, genre, level_arr, notes_arr, _, bpm_range, unlock_type = fields
 
-        if title == english_title:
-            english_title = None
+        if japanese_title == english_title:
+            japanese_title = None
         if "~" in bpm_range:
             min_bpm, max_bpm = map(int, bpm_range.split("~"))
         else:
@@ -43,15 +42,15 @@ if __name__ == '__main__':
         elif unlock_type == "Sub":
             unlock_type = 2
         else:
-            print(f"Unknown unlock type: {unlock_type} for song {title}")
+            print(f"Unknown unlock type: {unlock_type} for song {english_title}")
             unlock_type = -1
         levels = list(map(int, level_arr.split(",")))
         notes = list(map(int, notes_arr.split(",")))
 
         cursor.execute(
-            "INSERT INTO song (title, english_title, artist, genre, min_bpm, max_bpm, unlock_type)"
+            "INSERT INTO song (japanese_title, english_title, artist, genre, min_bpm, max_bpm, unlock_type)"
             " VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (title, english_title, artist, genre, min_bpm, max_bpm, unlock_type)
+            (japanese_title, english_title, artist, genre, min_bpm, max_bpm, unlock_type)
         )
         row_id = cursor.lastrowid
         for chart_type in [0,1]: # single, double

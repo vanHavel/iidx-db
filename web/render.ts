@@ -3,7 +3,7 @@ export function renderSongInfo(songIds, songInfo) {
     for (const id of songIds) {
         const song = songInfo[id];
         let li = document.createElement('li');
-        li.textContent = `${song.title}(${song.englishTitle}) - ${song.artist} (${song.genre})`;
+        li.textContent = `${song.japaneseTitle}(${song.englishTitle}) - ${song.artist} (${song.genre})`;
         ul.appendChild(li);
     }
     return ul.outerHTML;
@@ -15,7 +15,7 @@ export function updateNav(page, pageSize, totalCount) {
     document.getElementById('prevPage').disabled = (page === 1);
     document.getElementById('nextPage').disabled = (page === totalPages);
     document.getElementById('lastPage').disabled = (page === totalPages);
-    document.getElementById('firstOffset').textContent = `${(page - 1) * pageSize + 1}`;
+    document.getElementById('firstOffset').textContent = `${totalCount == 0 ? 0 : (page - 1) * pageSize + 1}`;
     document.getElementById('lastOffset').textContent = `${Math.min(page * pageSize, totalCount)}`;
     document.getElementById('totalCount').textContent = `${totalCount}`;
 }

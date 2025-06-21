@@ -12,7 +12,7 @@ export const mappings = {
         'Double': 1,
     },
     'order': {
-        'title': 's.title',
+        'title': 's.english_title',
         'level_asc': 'MIN(c.level)',
         'level_desc': 'MAX(c.level) DESC',
         'BPM_asc': 's.min_bpm',
