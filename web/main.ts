@@ -44,6 +44,15 @@ document.getElementById('search').addEventListener('click', async (e) => {
     [searchParams, sort] = getQueryParams();
     await search()
 });
+// hitting enter in the search input should trigger the search
+for (const field of ['title', 'artist', 'genre']) {
+    document.getElementById(field).addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            document.getElementById('search').click();
+        }
+    });
+}
+
 document.getElementById('firstPage').addEventListener('click', async (e) => {page = 1; await search();});
 document.getElementById('prevPage').addEventListener('click', async (e) => {if (page > 1) {page--; await search();}});
 document.getElementById('nextPage').addEventListener('click', async (e) => {if (page < maxPage) {page++; await search();}});
