@@ -18,10 +18,10 @@ Utils.GetUnlockStates();
 /* Primarily for debugging and checking for encoding issues */
 if (Config.Output_songlist)
 {
-    List<string> p = new List<string>() { "id\ttitle\ttitle2\tartist\tgenre\tlevel\tnotes\tgenre\tbpm\tunlockType" };
+    List<string> p = new List<string>() { "id\ttitle\english_title\tartist\tgenre\tlevel\tnotes\tfolder\tbpm\tunlockType" };
     foreach (var v in Utils.songDb)
     {
-        p.Add($"{v.Key}\t{v.Value.title}\t{v.Value.title_english}\t{v.Value.artist}\t{v.Value.genre}\t{String.Join(",", v.Value.level)}\t{String.Join(",", v.Value.totalNotes)}\t{v.Value.genre}\t{v.Value.bpm}\t{v.Value.type}");
+        p.Add($"{v.Key}\t{v.Value.title}\t{v.Value.title_english}\t{v.Value.artist}\t{v.Value.genre}\t{String.Join(",", v.Value.level)}\t{String.Join(",", v.Value.totalNotes)}\t{v.Value.folder}\t{v.Value.bpm}\t{v.Value.type}");
     }
     File.WriteAllLines("songs.tsv", p.ToArray());
 }
