@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sqlite.org/sqlite-wasm": "^3.50.1-build1"
+    "@sqlite.org/sqlite-wasm": "^3.50.1-build1",
+    "bootstrap": "^5.3.7"
   },
   "devDependencies": {
     "vite": "^6.3.5"

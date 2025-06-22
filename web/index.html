@@ -1,81 +1,160 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>iidx Infinitas Chart Database</title>
-    </head>
-    <body>
-        <div id="searchParams">
-            <div id="textParams">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" placeholder="Search by title...">
-                <label for="artist">Artist:</label>
-                <input type="text" id="artist" name="artist" placeholder="Search by artist...">
-                <label for="genre">Genre:</label>
-                <input type="text" id="genre" name="genre" placeholder="Search by genre...">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/main.css" />
+    <title>iidx Infinitas Chart Database</title>
+  </head>
+  <body>
+    <div class="container my-4 d-flex flex-column min-vh-100">
+      <section id="searchParams" class="mb-4">
+        <form>
+          <div class="row g-3 align-items-center mb-3">
+            <div class="col-12 col-md-4">
+              <label for="title" class="form-label mb-0 me-2">Title:</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                class="form-control d-inline-block w-auto"
+                placeholder="Search by title..."
+              />
             </div>
-            <div id="dropDownParams">
-                    <label for="difficulty">Difficulty:</label>
-                    <select id="difficulty" name="difficulty">
-                        <option value="">All</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Standard">Standard</option>
-                        <option value="Hyper">Hyper</option>
-                        <option value="Another">Another</option>
-                        <option value="Leggendaria">Leggendaria</option>
-                    </select>
-                    <label for ="level">Level:</label>
-                    <select id="level" name="level">
-                        <option value="">All</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                    <label for="chart_type">Type:</label>
-                    <select id="chart_type" name="type">
-                        <option value="">All</option>
-                        <option value="Single">Single</option>
-                        <option value="Double">Double</option>
-                    </select>
-                </div>
-                <div id="orderSubmit">
-                    <label for="order">Order By:</label>
-                    <select id="order" name="order">
-                        <option value="title">Title</option>
-                        <option value="level_asc">Level (Lowest)</option>
-                        <option value="level_desc">Level (Highest)</option>
-                        <option value="BPM_asc">BPM (Increasing)</option>
-                        <option value="BPM_desc">BPM (Decreasing)</option>
-                        <option value="note_asc">Note Count (Increasing)</option>
-                        <option value="note_desc">Note Count (Decreasing)</option>
-                    </select>
-                    <button type="button" id="search">Search</button>
-                </div>
-        </div>
-        <div id="results">
-            <!-- Results will be displayed here after search -->
-        </div>
-        <div id="navigation">
-            <button id="firstPage" disabled>&lt;&lt;</button>
-            <button id="prevPage" disabled>&lt;</button>
-            <span>Showing songs </span>
-            <span id="firstOffset">1</span>
-            <span> to </span>
-            <span id="lastOffset">50</span>
-            <span> of </span>
-            <span id="totalCount">500</span>
-            <button id="nextPage" disabled>&gt;</button>
-            <button id="lastPage" disabled>&gt;&gt;</button>
-        </div>
-        <script type="module" src="main.ts"></script>
-    </body>
+            <div class="col-12 col-md-4">
+              <label for="artist" class="form-label mb-0 me-2">Artist:</label>
+              <input
+                type="text"
+                id="artist"
+                name="artist"
+                class="form-control d-inline-block w-auto"
+                placeholder="Search by artist..."
+              />
+            </div>
+            <div class="col-12 col-md-4">
+              <label for="genre" class="form-label mb-0 me-2">Genre:</label>
+              <input
+                type="text"
+                id="genre"
+                name="genre"
+                class="form-control d-inline-block w-auto"
+                placeholder="Search by genre..."
+              />
+            </div>
+          </div>
+
+          <div class="row g-3 align-items-center mb-3">
+            <div class="col-12 col-md-4">
+              <label for="difficulty" class="form-label mb-0 me-2">Difficulty:</label>
+              <select
+                id="difficulty"
+                name="difficulty"
+                class="form-select d-inline-block w-auto"
+              >
+                <option value="">All</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Standard">Standard</option>
+                <option value="Hyper">Hyper</option>
+                <option value="Another">Another</option>
+                <option value="Leggendaria">Leggendaria</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label for="level" class="form-label mb-0 me-2">Level:</label>
+              <select
+                id="level"
+                name="level"
+                class="form-select d-inline-block w-auto"
+              >
+                <option value="">All</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <label for="chart_type" class="form-label mb-0 me-2">Type:</label>
+              <select
+                id="chart_type"
+                name="type"
+                class="form-select d-inline-block w-auto"
+              >
+                <option value="">All</option>
+                <option value="Single">Single</option>
+                <option value="Double">Double</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row g-3 align-items-center">
+            <div class="col-12 col-md-8 d-flex align-items-center">
+              <label for="order" class="form-label mb-0 me-2">Order By:</label>
+              <select id="order" name="order" class="form-select w-auto">
+                <option value="title">Title</option>
+                <option value="level_asc">Level (Lowest)</option>
+                <option value="level_desc">Level (Highest)</option>
+                <option value="BPM_asc">BPM (Increasing)</option>
+                <option value="BPM_desc">BPM (Decreasing)</option>
+                <option value="note_asc">Note Count (Increasing)</option>
+                <option value="note_desc">Note Count (Decreasing)</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-4">
+              <button type="button" id="search" class="btn btn-primary w-100">
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section
+        id="results"
+        class="flex-grow-1 overflow-auto border rounded p-3 mb-4"
+      >
+
+      </section>
+
+      <nav
+        id="navigation"
+        class="d-flex justify-content-center align-items-center gap-2 mb-4"
+        aria-label="Search results navigation"
+      >
+        <button
+          id="firstPage"
+          disabled
+          class="btn btn-outline-primary btn-sm"
+        >
+          &lt;&lt;
+        </button>
+        <button id="prevPage" disabled class="btn btn-outline-primary btn-sm">
+          &lt;
+        </button>
+        <span class="mx-2">
+          Showing songs <span id="firstOffset">1</span> to
+          <span id="lastOffset">50</span> of <span id="totalCount">500</span>
+        </span>
+        <button id="nextPage" disabled class="btn btn-outline-primary btn-sm">
+          &gt;
+        </button>
+        <button
+          id="lastPage"
+          disabled
+          class="btn btn-outline-primary btn-sm"
+        >
+          &gt;&gt;
+        </button>
+      </nav>
+    </div>
+
+    <script type="module" src="main.ts"></script>
+  </body>
 </html>
