@@ -1,1 +1,22 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
+
+.text-legg {
+  color: purple !important;
+}
+
+tr.tr-striped > td {
+  background-color: #f1f2f3 !important;
+}
+
+.form-label.fixed-label {
+  width: 100px;
+  min-width: 100px;
+  display: inline-block;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.fixed-input {
+  width: 20%;
+  min-width: 200px;
+}

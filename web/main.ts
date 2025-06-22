@@ -35,7 +35,7 @@ async function search() {
     console.log("Total Count:", totalCount);
     const songInfo = await getSongInfo(ids, searchParams);
     console.log("Song Info:", songInfo);
-    //document.getElementById('results').innerHTML = renderSongInfo(ids, songInfo);
+    document.getElementById('results').innerHTML = renderSongInfo(ids, songInfo);
     updateNav(page, pageSize, totalCount);
 }
 
