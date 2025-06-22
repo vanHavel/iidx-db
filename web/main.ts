@@ -14,7 +14,11 @@ function getQueryParams() {
             if (mappings[field]) {
                 params[`$${field}`] = mappings[field][input.value];
             } else {
-                params[`$${field}`] = input.value.trim();
+                // remove special characters
+                const cleaned = input.value.replace(/[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/g, ' ').trim();
+                if (cleaned) {
+                    params[`$${field}`] = cleaned;
+                }
             }
         }
     }

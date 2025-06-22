@@ -39,4 +39,5 @@ export type Song = {
     unlock_type: UnlockType;
     single?: ChartCollection;
     double?: ChartCollection;
+    folder: string;
 }

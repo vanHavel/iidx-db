@@ -27,7 +27,7 @@ if __name__ == '__main__':
         if row_number == 0:
             continue
         fields = line.strip().split("\t")
-        _, japanese_title, english_title, artist, genre, level_arr, notes_arr, _, bpm_range, unlock_type = fields
+        _, japanese_title, english_title, artist, genre, level_arr, notes_arr, folder, bpm_range, unlock_type = fields
 
         if japanese_title == english_title:
             japanese_title = None
@@ -46,11 +46,12 @@ if __name__ == '__main__':
             unlock_type = -1
         levels = list(map(int, level_arr.split(",")))
         notes = list(map(int, notes_arr.split(",")))
+        folder_id = int(folder)
 
         cursor.execute(
-            "INSERT INTO song (japanese_title, english_title, artist, genre, min_bpm, max_bpm, unlock_type)"
-            " VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (japanese_title, english_title, artist, genre, min_bpm, max_bpm, unlock_type)
+            "INSERT INTO song (japanese_title, english_title, artist, genre, min_bpm, max_bpm, unlock_type, folder)"
+            " VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (japanese_title, english_title, artist, genre, min_bpm, max_bpm, unlock_type, folder_id)
         )
         row_id = cursor.lastrowid
         for chart_type in [0,1]: # single, double

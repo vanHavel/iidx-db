@@ -1,12 +1,13 @@
 CREATE TABLE IF NOT EXISTS song (
   id INTEGER PRIMARY KEY,
   english_title TEXT NOT NULL,
-  japanese_title TEXT, --only set if different from english_title
+  japanese_title TEXT, -- only set if different from english_title
   artist TEXT NOT NULL,
   genre TEXT NOT NULL,
   min_bpm INTEGER NOT NULL,
   max_bpm INTEGER NOT NULL,
-  unlock_type INTEGER NOT NULL -- -1 = unknown, 0 = default, 1 = bits, 2 = songpack
+  unlock_type INTEGER NOT NULL, -- -1 = unknown, 0 = default, 1 = bits, 2 = songpack
+  folder INTEGER NOT NULL -- see constants.ts for folder names
 ) STRICT;
 
 CREATE TABLE IF NOT EXISTS chart (

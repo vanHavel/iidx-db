@@ -129,7 +129,8 @@ function createSongInfo(rows) {
                 max_bpm: row.max_bpm,
                 unlock_type: UnlockType.fromInt(row.unlock_type),
                 single: {},
-                double: {}
+                double: {},
+                folder: inverseMappings['folder'][row.folder]
             };
         }
         const chart: Chart = {
