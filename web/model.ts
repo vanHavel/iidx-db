@@ -1,4 +1,5 @@
 export enum UnlockType {
+    Unknown = "unknown",
     Base = "base",
     Bits = "bits",
     Pack = "pack"
@@ -10,7 +11,7 @@ namespace UnlockType {
             case 0: return UnlockType.Base;
             case 1: return UnlockType.Bits;
             case 2: return UnlockType.Pack;
-            default: throw new Error(`Invalid UnlockType value: ${value}`);
+            default: return UnlockType.Unknown;
         }
     }
 }
