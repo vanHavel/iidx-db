@@ -1,5 +1,5 @@
 export function updateNav(page, pageSize, totalCount) {
-    const totalPages = Math.ceil(totalCount / pageSize);
+    const totalPages = Math.max(Math.ceil(totalCount / pageSize), 1);
     document.getElementById('firstPage').disabled = (page === 1);
     document.getElementById('prevPage').disabled = (page === 1);
     document.getElementById('nextPage').disabled = (page === totalPages);
@@ -23,6 +23,9 @@ function renderChart(chart) {
 }
 
 export function renderSongInfo(songIds, songInfo) {
+    if (!songIds || songIds.length === 0) {
+        return `<tr><td colspan="8" class="text-center">No songs found</td></tr>`;
+    }
     return songIds
         .map((id) => {
             const song = songInfo[id];
