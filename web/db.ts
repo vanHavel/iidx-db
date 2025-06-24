@@ -13,8 +13,10 @@ async function loadDatabase() {
       print: console.log,
       printErr: console.error,
     });
-    const res = await fetch('db.sqlite3.gz');
-    const raw = new Uint8Array(await res.arrayBuffer());
+    const res = await fetch('db.sqlite3.gzipped');
+    const ds = new DecompressionStream('gzip');
+    const decompressedStream = res.body.pipeThrough(ds);
+    const raw = new Uint8Array(await new Response(decompressedStream).arrayBuffer());
 
     // load DB from buffer: https://stackoverflow.com/a/78119681
     const p = sqlite3.wasm.allocFromTypedArray(raw);

@@ -1,6 +1,6 @@
 .idea
 .venv
 db.sqlite3
-db.sqlite3.gz
+db.sqlite3.gzipped
 node_modules
 dist

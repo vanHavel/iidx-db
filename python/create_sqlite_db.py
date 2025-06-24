@@ -80,7 +80,7 @@ if __name__ == '__main__':
 
     with open(db_path, "rb") as db_file:
         # gzip compress the database file
-        with gzip.open("../web/public/db.sqlite3.gz", "wb") as gzip_file:
+        with gzip.open("../web/public/db.sqlite3.gzipped", "wb") as gzip_file:
             shutil.copyfileobj(db_file, gzip_file)
 
 

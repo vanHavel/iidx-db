@@ -16,6 +16,7 @@
   "scripts": {
     "dev": "npx vite",
     "build": "python3 ../python/create_sqlite_db.py && npx vite build",
-    "serve": "npx vite preview"
+    "serve": "npx vite preview",
+    "clean": "rm -rf dist"
   }
 }
