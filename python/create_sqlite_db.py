@@ -5,6 +5,11 @@ import sqlite3
 
 
 if __name__ == '__main__':
+    # Change the current working directory to the directory of this script
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(abspath)
+    os.chdir(dname)
+
     db_path = "data/db.sqlite3"
     os.makedirs(os.path.dirname(db_path), exist_ok=True)
 
@@ -14,7 +19,7 @@ if __name__ == '__main__':
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    with open("sql/ddl.sql") as ddl_file:
+    with open("./sql/ddl.sql") as ddl_file:
         ddl_script = ddl_file.read()
     cursor.executescript(ddl_script)
     conn.commit()
