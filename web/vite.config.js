@@ -12,7 +12,7 @@ export default defineConfig({
     exclude: ['@sqlite.org/sqlite-wasm'],
   },
   build: {
-    outDir: '../dist',
+    outDir: 'dist',
     target: 'esnext',
   },
 });
