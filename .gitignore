@@ -4,3 +4,4 @@ db.sqlite3
 db.sqlite3.gzipped
 node_modules
 dist
+.DS_Store

@@ -50,13 +50,13 @@ export function renderSongInfo(songIds, songInfo) {
                 rowspan="3"
               >
                 <img
-                  src="/img/${song.folder}.png"
+                  src="/img/${song.folder}.webp"
                   alt="${title}"
                   style="
                     max-width: 100%;
                     max-height: 75px;
                     margin: auto;
-                    width: 75%;
+                    width: 85%;
                     height: auto;
                     display: block;
                     object-fit: contain;
