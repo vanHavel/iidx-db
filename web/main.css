@@ -32,7 +32,7 @@ tr.tr-striped > td {
   max-width: 100%;
   max-height: 75px;
   margin: auto;
-  width: 85%;
+  width: 92%;
   height: auto;
   display: block;
   object-fit: contain;
@@ -68,7 +68,7 @@ tr.tr-striped > td {
   width: 5%;
   font-weight: 600;
   text-align: left;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 /* Chart row font */
