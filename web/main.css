@@ -20,3 +20,65 @@ tr.tr-striped > td {
   width: 20%;
   min-width: 200px;
 }
+
+/* Song image cell */
+.song-image-cell {
+  width: 15%;
+  padding: 0;
+}
+
+/* Song image styling */
+.song-image {
+  max-width: 100%;
+  max-height: 75px;
+  margin: auto;
+  width: 85%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Song info cell */
+.song-info {
+  width: 20%;
+  word-wrap: break-word;
+  white-space: normal;
+  text-align: left;
+}
+.song-title {
+  font-weight: 600;
+}
+.song-artist {
+  font-size: 0.9em;
+}
+.song-genre {
+  font-size: 0.85em;
+}
+
+/* BPM and Unlock info */
+.song-meta-label {
+  width: 10%;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+/* Section label (SP/DP) */
+.chart-section-label {
+  width: 5%;
+  font-weight: 600;
+  text-align: left;
+  font-size: 0.9em;
+}
+
+/* Chart row font */
+.chart-row {
+  font-size: 0.9em;
+}
+
+/* Chart cell width */
+.chart-cell {
+  width: 10%;
+}
+
+

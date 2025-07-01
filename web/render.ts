@@ -26,6 +26,7 @@ export function renderSongInfo(songIds, songInfo) {
     if (!songIds || songIds.length === 0) {
         return `<tr><td colspan="8" class="text-center">No songs found</td></tr>`;
     }
+
     return songIds
         .map((id) => {
             const song = songInfo[id];
@@ -38,62 +39,40 @@ export function renderSongInfo(songIds, songInfo) {
                 return Object.keys(difficultyColors)
                     .map((difficulty) => {
                         const chart = chartCollection?.[difficulty];
-                        return `<td class="${difficultyColors[difficulty]}" style="width: 10%">${renderChart(chart)}</td>`;
+                        return `<td class="${difficultyColors[difficulty]} chart-cell">${renderChart(chart)}</td>`;
                     })
                     .join("");
             }
 
             return `
             <tr class="${stripeClass}">
-              <td
-                style="width: 15%; padding: 0;"
-                rowspan="3"
-              >
+              <td class="song-image-cell" rowspan="3">
                 <img
                   src="/img/${song.folder}.webp"
                   alt="${title}"
-                  style="
-                    max-width: 100%;
-                    max-height: 75px;
-                    margin: auto;
-                    width: 85%;
-                    height: auto;
-                    display: block;
-                    object-fit: contain;
-                  "
+                  class="song-image"
                 />
               </td>
-              <td
-                class="text-start"
-                style="
-                  width: 20%;
-                  word-wrap: break-word;
-                  white-space: normal;
-                "
-                rowspan="3"
-              >
-                <div style="font-weight: 600">${title}</div>
-                <div class="text-muted fst-italic" style="font-size: 0.9em;">${song.artist}</div>
-                <div class="text-muted" style="font-size: 0.85em;">${song.genre}</div>
+              <td class="song-info" rowspan="3">
+                <div class="song-title">${title}</div>
+                <div class="text-muted fst-italic song-artist">${song.artist}</div>
+                <div class="text-muted song-genre">${song.genre}</div>
               </td>
-              <td/>
-              <td style="width: 10%; text-align: left; font-weight: 600; font-size: 0.9em;">
-                BPM: ${bpm}
-              </td>
-              <td style="width: 10%; text-align: left; font-weight: 600; font-size: 0.9em;">
-                Unlock: ${unlock}
-              </td>
-              <td/> <td/> <td/>
+              <td></td>
+              <td class="song-meta-label">BPM: ${bpm}</td>
+              <td class="song-meta-label">Unlock: ${unlock}</td>
+              <td></td> <td></td> <td></td>
             </tr>
-            <tr class="${stripeClass}" style="font-size: 0.9em;">
-              <td style="width: 5%; font-weight: 600; text-align: left;">SP:</td>
+            <tr class="${stripeClass} chart-row">
+              <td class="chart-section-label">SP:</td>
               ${generateChartCells(song.single, true)}
             </tr>
-            <tr class="${stripeClass}" style="font-size: 0.9em;">
-              <td style="width: 5%; font-weight: 600; text-align: left;">DP:</td>
+            <tr class="${stripeClass} chart-row">
+              <td class="chart-section-label">DP:</td>
               ${generateChartCells(song.double, false)}
             </tr>
             `;
         })
         .join("");
 }
+
