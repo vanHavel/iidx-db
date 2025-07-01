@@ -1,3 +1,5 @@
+import { inverseMappings } from './constants.ts';
+
 export function updateNav(page, pageSize, totalCount) {
     const totalPages = Math.max(Math.ceil(totalCount / pageSize), 1);
     document.getElementById('firstPage').disabled = (page === 1);
@@ -19,10 +21,26 @@ const difficultyColors = {
 
 function renderChart(chart) {
     if (!chart) return "/";
-    return `Lv.${chart.level} (${chart.note_count})`;
+    return `<b>Lv.${chart.level}</b> (${chart.note_count})`;
 }
 
-export function renderSongInfo(songIds, songInfo) {
+function isChartSelected(isSingle, difficulty, level, searchParams) {
+    const searchSingle = searchParams.$chart_type;
+    const searchDifficulty = searchParams.$difficulty;
+    const searchLevel = searchParams.$level;
+    if (searchSingle !== undefined && (searchSingle === 0) !== isSingle) {
+        return false;
+    }
+    if (searchDifficulty !== undefined && inverseMappings['difficulty'][searchDifficulty].toLowerCase() !== difficulty) {
+        return false;
+    }
+    if (searchLevel !== undefined && searchLevel !== level) {
+        return false;
+    }
+    return true;
+}
+
+export function renderSongInfo(songIds, songInfo, searchParams) {
     if (!songIds || songIds.length === 0) {
         return `<tr><td colspan="8" class="text-center">No songs found</td></tr>`;
     }
@@ -35,17 +53,20 @@ export function renderSongInfo(songIds, songInfo) {
             const bpm = song.min_bpm === song.max_bpm ? `${song.min_bpm}` : `${song.min_bpm}~${song.max_bpm}`;
             const stripeClass = songIds.indexOf(id) % 2 === 0 ? "tr-striped" : "";
 
-            function generateChartCells(chartCollection, isSingle) {
+            function generateChartCells(chartCollection, isSingle, searchParams) {
                 return Object.keys(difficultyColors)
                     .map((difficulty) => {
                         const chart = chartCollection?.[difficulty];
-                        return `<td class="${difficultyColors[difficulty]} chart-cell">${renderChart(chart)}</td>`;
+                        const isSelected = chart ? isChartSelected(isSingle, difficulty, chart.level, searchParams) : false;
+                        console.log(isSelected);
+                        return `<td class="${difficultyColors[difficulty]} chart-cell selected-${isSelected}">${renderChart(chart)}</td>`;
                     })
                     .join("");
             }
 
+
             return `
-            <tr class="${stripeClass}">
+            <tr class="${stripeClass} song-separator">
               <td class="song-image-cell" rowspan="3">
                 <img
                   src="/img/${song.folder}.webp"
@@ -58,18 +79,16 @@ export function renderSongInfo(songIds, songInfo) {
                 <div class="text-muted fst-italic song-artist">${song.artist}</div>
                 <div class="text-muted song-genre">${song.genre}</div>
               </td>
-              <td></td>
-              <td class="song-meta-label">BPM: ${bpm}</td>
-              <td class="song-meta-label">Unlock: ${unlock}</td>
-              <td></td> <td></td> <td></td>
+              <td colspan="5" class="song-meta-label bpm-info">BPM: ${bpm}</td>
+              <td class="song-meta-label unlock-info chart-cell">Unlock: ${unlock}</td>
             </tr>
             <tr class="${stripeClass} chart-row">
               <td class="chart-section-label">SP:</td>
-              ${generateChartCells(song.single, true)}
+              ${generateChartCells(song.single, true, searchParams)}
             </tr>
             <tr class="${stripeClass} chart-row">
               <td class="chart-section-label">DP:</td>
-              ${generateChartCells(song.double, false)}
+              ${generateChartCells(song.double, false, searchParams)}
             </tr>
             `;
         })

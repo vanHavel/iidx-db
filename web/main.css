@@ -58,9 +58,15 @@ tr.tr-striped > td {
 /* BPM and Unlock info */
 .song-meta-label {
   width: 10%;
-  text-align: left;
   font-weight: 600;
   font-size: 0.9em;
+}
+.bpm-info {
+  text-align: left;
+  border-right: none;
+}
+.unlock-info {
+  text-align: right;
 }
 
 /* Section label (SP/DP) */
@@ -69,16 +75,36 @@ tr.tr-striped > td {
   font-weight: 600;
   text-align: left;
   font-size: 1em;
+  border-right: none;
 }
 
-/* Chart row font */
+/* Chart row */
 .chart-row {
   font-size: 0.9em;
+  border-top: none;
+  border-bottom: none;
 }
 
 /* Chart cell width */
 .chart-cell {
   width: 10%;
+  border-left: none;
+  border-right: none;
 }
 
+.chart-cell.selected-false {
+  color: #aaa !important;
+}
 
+tr .chart-cell:last-of-type {
+  border-right: 1px solid #ddd;
+}
+
+/* Add border between songs */
+.song-separator td {
+  border-top: 2px solid #bbb;
+  border-bottom: none;
+}
+.song-separator:first-of-type td {
+  border-top: none;
+}
