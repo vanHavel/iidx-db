@@ -31,10 +31,7 @@ let [searchParams, sort] = getQueryParams();
 async function search() {
     const [ids, totalCount] = await getSongIds(searchParams, sort, page, pageSize);
     maxPage = Math.ceil(totalCount / pageSize);
-    console.log("Song IDs:", ids);
-    console.log("Total Count:", totalCount);
     const songInfo = await getSongInfo(ids, searchParams);
-    console.log("Song Info:", songInfo);
     document.getElementById('results').innerHTML = renderSongInfo(ids, songInfo, searchParams);
     updateNav(page, pageSize, totalCount);
 }

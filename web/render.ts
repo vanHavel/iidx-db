@@ -58,7 +58,6 @@ export function renderSongInfo(songIds, songInfo, searchParams) {
                     .map((difficulty) => {
                         const chart = chartCollection?.[difficulty];
                         const isSelected = chart ? isChartSelected(isSingle, difficulty, chart.level, searchParams) : false;
-                        console.log(isSelected);
                         return `<td class="${difficultyColors[difficulty]} chart-cell selected-${isSelected}">${renderChart(chart)}</td>`;
                     })
                     .join("");

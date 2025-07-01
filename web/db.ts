@@ -68,23 +68,19 @@ export async function getSongIds(params, sort, page, pageSize) {
     const db = await loadDatabase();
     params.$limit = pageSize;
     params.$offset = (page - 1) * pageSize;
-    console.log("params", JSON.stringify(params, null, 2));
     let query = buildQuery(params, false, sort);
     let resultRows = [];
-    console.log("Executing query:", query);
     db.exec({
         sql: query,
         bind: params,
         rowMode: 'object',
         resultRows: resultRows
     });
-    console.log("resultRows", JSON.stringify(resultRows, null, 2));
     let countQuery = buildQuery(params, true);
     for (const paramToDrop of ['$limit', '$offset']) {
         delete params[paramToDrop];
     }
     let countRows = [];
-    console.log("Executing count query:", countQuery);
     db.exec({
         sql: countQuery,
         bind: params,
@@ -106,14 +102,12 @@ export async function getSongInfo(songIds, params) {
     WHERE s.id IN (${songIds.join(', ')})
     `;
     let resultRows = [];
-    console.log("Executing query:", query);
     db.exec({
         sql: query,
         bind: songIds,
         rowMode: 'object',
         resultRows: resultRows
     });
-    console.log("resultRows", JSON.stringify(resultRows, null, 2));
     return createSongInfo(resultRows);
 }
 
