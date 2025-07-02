@@ -1,5 +1,7 @@
 # iidx-db
-iidx Chart Database
+iidx Chart Database. 
+
+[iidx.directory](https://iidx.directory) is currently live with the data for Infinitas. Console data might be added in the future.
 
 # Obtaining the raw data 
 To obtain the raw song / chart info for Infinitas, we use [Reflux](https://github.com/olji/Reflux) which reads it from Infinitas memory.
@@ -41,12 +43,17 @@ The db will be gzip-compressed and placed into the `web/public` directory.
 # Running the dev server
 ```bash
 cd web
-npx vite
+npm run dev
 ```
 
 # Building the web app
 ```bash
 cd web
-npx vite build
-# serve the /dist directory with a web server, e.g. `python -m http.server /dist` from the root folder
+npm run build
+```
+
+# Serving the production build
+```bash
+cd web
+npm run serve
 ```
