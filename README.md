@@ -1,7 +1,7 @@
 # iidx-db
 iidx Chart Database. 
 
-[iidx.directory](https://iidx.directory) is currently live with the data for Infinitas. Console data might be added in the future.
+[iidx.directory](https://iidx.directory) is currently live with the data for Infinitas. Arcade data might be added in the future.
 
 # Obtaining the raw data 
 To obtain the raw song / chart info for Infinitas, we use [Reflux](https://github.com/olji/Reflux) which reads it from Infinitas memory.
