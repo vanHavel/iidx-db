@@ -57,3 +57,8 @@ npm run build
 cd web
 npm run serve
 ```
+
+# Convert png to webp
+```bash
+find . -type f -name '*.png' -print0 | xargs -0 -I{} sh -c 'cwebp -q 80 "$0" -o "${0%.*}.webp"' {}
+```

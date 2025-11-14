@@ -55,6 +55,7 @@ export const mappings = {
         '30-resident': 30,
         '31-epolis': 31,
         '32-pinkycrush': 32,
+        '33-sparkleshower': 33,
         'infinitas': 80,
     }
 };
