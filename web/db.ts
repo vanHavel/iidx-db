@@ -139,3 +139,40 @@ function createSongInfo(rows) {
     }
     return songs;
 }
+
+export async function loadInitialData() {
+    const response = await fetch('/initial-data.json');
+    const data = await response.json();
+
+    const songInfo = {};
+    for (const [songId, song] of Object.entries(data.songs)) {
+        songInfo[songId] = {
+            title: song.englishTitle,
+            englishTitle: song.englishTitle,
+            japaneseTitle: song.japaneseTitle,
+            artist: song.artist,
+            genre: song.genre,
+            min_bpm: song.minBpm,
+            max_bpm: song.maxBpm,
+            unlock_type: UnlockType.fromInt(song.unlockType),
+            single: {},
+            double: {},
+            folder: inverseMappings['folder'][song.folder]
+        };
+
+        for (const chart of song.charts) {
+            const chartType = inverseMappings['chart_type'][chart.chartType].toLowerCase();
+            const difficulty = inverseMappings['difficulty'][chart.difficulty].toLowerCase();
+            songInfo[songId][chartType][difficulty] = {
+                level: chart.level,
+                note_count: chart.noteCount
+            };
+        }
+    }
+
+    return {
+        songIds: data.songIds,
+        songInfo: songInfo,
+        totalCount: data.totalCount
+    };
+}

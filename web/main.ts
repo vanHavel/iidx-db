@@ -1,4 +1,4 @@
-import { getSongIds, getSongInfo } from './db.ts';
+import { getSongIds, getSongInfo, loadInitialData } from './db.ts';
 import { pageSize } from './constants.ts';
 import { renderSongInfo, updateNav } from './render.ts';
 import { mappings } from './constants.ts';
@@ -28,12 +28,23 @@ function getQueryParams() {
 
 let [searchParams, sort] = getQueryParams();
 
+function isInitialView() {
+    return Object.keys(searchParams).length === 0 && sort === 's.english_title' && page === 1;
+}
+
 async function search() {
-    const [ids, totalCount] = await getSongIds(searchParams, sort, page, pageSize);
-    maxPage = Math.ceil(totalCount / pageSize);
-    const songInfo = await getSongInfo(ids, searchParams);
-    document.getElementById('results').innerHTML = renderSongInfo(ids, songInfo, searchParams);
-    updateNav(page, pageSize, totalCount);
+    if (isInitialView()) {
+        const { songIds, songInfo, totalCount } = await loadInitialData();
+        maxPage = Math.ceil(totalCount / pageSize);
+        document.getElementById('results').innerHTML = renderSongInfo(songIds, songInfo, searchParams);
+        updateNav(page, pageSize, totalCount);
+    } else {
+        const [ids, totalCount] = await getSongIds(searchParams, sort, page, pageSize);
+        maxPage = Math.ceil(totalCount / pageSize);
+        const songInfo = await getSongInfo(ids, searchParams);
+        document.getElementById('results').innerHTML = renderSongInfo(ids, songInfo, searchParams);
+        updateNav(page, pageSize, totalCount);
+    }
 }
 
 document.getElementById('search').addEventListener('click', async (e) => {

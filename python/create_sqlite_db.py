@@ -1,7 +1,64 @@
 import gzip
+import json
 import os.path
 import shutil
 import sqlite3
+
+
+def generate_initial_data(cursor):
+    page_size = 20
+    cursor.execute("SELECT COUNT(DISTINCT s.id) FROM song s JOIN chart c ON s.id = c.id_song")
+    total_count = cursor.fetchone()[0]
+
+    cursor.execute("""
+        SELECT s.id
+        FROM song s
+        JOIN chart c ON s.id = c.id_song
+        GROUP BY s.id
+        ORDER BY s.english_title
+        LIMIT ?
+    """, (page_size,))
+    song_ids = [row[0] for row in cursor.fetchall()]
+
+    cursor.execute(f"""
+        SELECT s.id, s.japanese_title, s.english_title, s.artist, s.genre, s.min_bpm, s.max_bpm, s.unlock_type, s.folder,
+               c.level, c.note_count, c.difficulty, c.chart_type
+        FROM song s
+        JOIN chart c ON s.id = c.id_song
+        WHERE s.id IN ({','.join('?' * len(song_ids))})
+    """, song_ids)
+
+    songs = {}
+    for row in cursor.fetchall():
+        song_id, japanese_title, english_title, artist, genre, min_bpm, max_bpm, unlock_type, folder, level, note_count, difficulty, chart_type = row
+        if song_id not in songs:
+            songs[song_id] = {
+                'id': song_id,
+                'japaneseTitle': japanese_title,
+                'englishTitle': english_title,
+                'artist': artist,
+                'genre': genre,
+                'minBpm': min_bpm,
+                'maxBpm': max_bpm,
+                'unlockType': unlock_type,
+                'folder': folder,
+                'charts': []
+            }
+        songs[song_id]['charts'].append({
+            'level': level,
+            'noteCount': note_count,
+            'difficulty': difficulty,
+            'chartType': chart_type
+        })
+
+    initial_data = {
+        'songIds': song_ids,
+        'songs': songs,
+        'totalCount': total_count
+    }
+
+    with open('../web/public/initial-data.json', 'w') as json_file:
+        json.dump(initial_data, json_file, separators=(',', ':'))
 
 
 if __name__ == '__main__':
@@ -76,6 +133,9 @@ if __name__ == '__main__':
     conn.commit()
     cursor.executescript("PRAGMA page_size = 1024;VACUUM;")
     conn.commit()
+
+    generate_initial_data(cursor)
+
     conn.close()
 
     with open(db_path, "rb") as db_file:
