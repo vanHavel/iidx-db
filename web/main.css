@@ -30,12 +30,13 @@ tr.tr-striped > td {
 /* Song image styling */
 .song-image {
   max-width: 100%;
-  max-height: 75px;
+  height: 75px;
   margin: auto;
   width: 92%;
-  height: auto;
   display: block;
-  object-fit: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* Song info cell */

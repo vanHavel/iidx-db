@@ -67,11 +67,12 @@ export function renderSongInfo(songIds, songInfo, searchParams) {
             return `
             <tr class="${stripeClass} song-separator">
               <td class="song-image-cell" rowspan="3">
-                <img
-                  src="/img/${song.folder}.webp"
-                  alt="${title}"
+                <div
                   class="song-image"
-                />
+                  style="background-image: url('/img/${song.folder}.webp')"
+                  role="img"
+                  aria-label="${title}"
+                ></div>
               </td>
               <td class="song-info" rowspan="3">
                 <div class="song-title">${title}</div>
@@ -93,4 +94,3 @@ export function renderSongInfo(songIds, songInfo, searchParams) {
         })
         .join("");
 }
-
