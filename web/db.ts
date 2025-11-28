@@ -176,3 +176,4 @@ export async function loadInitialData() {
         totalCount: data.totalCount
     };
 }
+

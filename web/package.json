@@ -14,7 +14,7 @@
     "vite": "^6.3.5"
   },
   "scripts": {
-    "dev": "npx vite",
+    "dev": "python3 ../python/create_sqlite_db.py && npx vite",
     "build": "python3 ../python/create_sqlite_db.py && npx vite build",
     "serve": "npx vite preview",
     "clean": "rm -rf dist"

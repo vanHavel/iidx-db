@@ -143,4 +143,3 @@ if __name__ == '__main__':
         with gzip.open("../web/public/db.sqlite3.gzipped", "wb") as gzip_file:
             shutil.copyfileobj(db_file, gzip_file)
 
-
