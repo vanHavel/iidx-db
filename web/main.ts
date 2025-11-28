@@ -38,7 +38,8 @@ async function search() {
         maxPage = Math.ceil(totalCount / pageSize);
         document.getElementById('results').innerHTML = renderSongInfo(songIds, songInfo, searchParams);
         updateNav(page, pageSize, totalCount);
-        loadDatabase();
+        // slightly delayed load of full database to avoid blocking UI
+        setTimeout(() => loadDatabase(), 100);
     } else {
         const [ids, totalCount] = await getSongIds(searchParams, sort, page, pageSize);
         maxPage = Math.ceil(totalCount / pageSize);
