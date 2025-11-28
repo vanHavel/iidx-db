@@ -5,7 +5,7 @@ import type { Song, Chart, ChartCollection } from './model.ts';
 
 let db = null;
 
-async function loadDatabase() {
+export async function loadDatabase() {
     if (db) {
         return db;
     }

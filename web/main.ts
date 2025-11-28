@@ -1,4 +1,4 @@
-import { getSongIds, getSongInfo, loadInitialData } from './db.ts';
+import { getSongIds, getSongInfo, loadInitialData, loadDatabase } from './db.ts';
 import { pageSize } from './constants.ts';
 import { renderSongInfo, updateNav } from './render.ts';
 import { mappings } from './constants.ts';
@@ -38,6 +38,7 @@ async function search() {
         maxPage = Math.ceil(totalCount / pageSize);
         document.getElementById('results').innerHTML = renderSongInfo(songIds, songInfo, searchParams);
         updateNav(page, pageSize, totalCount);
+        loadDatabase();
     } else {
         const [ids, totalCount] = await getSongIds(searchParams, sort, page, pageSize);
         maxPage = Math.ceil(totalCount / pageSize);
