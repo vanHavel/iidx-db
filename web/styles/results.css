@@ -1,0 +1,273 @@
+#results-section {
+  min-height: 180px;
+}
+
+#results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.song-card {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.82fr) minmax(560px, 1.18fr);
+  align-items: stretch;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background:
+    linear-gradient(90deg, rgba(21, 35, 60, 0.05), transparent 42%),
+    var(--bg-panel-strong);
+  border: 1px solid var(--panel-border);
+  border-left: 5px solid var(--accent);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  animation: fadeIn 220ms ease-out both;
+}
+
+.song-info {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.song-image {
+  width: 200px;
+  height: 107px;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 0;
+  border-radius: var(--radius-md);
+}
+
+.song-meta {
+  min-width: 0;
+}
+
+.song-title,
+.song-artist,
+.song-genre {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.song-title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.song-artist {
+  margin-top: var(--space-xs);
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+.song-genre {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.song-details {
+  margin-top: var(--space-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.song-details span {
+  padding: 2px 8px;
+  color: var(--bg-chrome);
+  font-size: 0.75rem;
+  font-weight: 800;
+  background: #e7f1fa;
+  border: 1px solid #c7d9e9;
+  border-radius: var(--radius-sm);
+}
+
+.song-charts {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.chart-group {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: var(--space-sm);
+  align-items: stretch;
+}
+
+.chart-group-label {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: var(--bg-chrome);
+  border-radius: var(--radius-sm);
+}
+
+.chart-cells {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.chart-cell {
+  min-width: 0;
+  min-height: 54px;
+  padding: 7px 6px;
+  display: grid;
+  grid-template-rows: 1.05rem 1.15rem 1rem;
+  align-content: center;
+  align-items: center;
+  gap: 1px;
+  color: var(--text-primary);
+  text-align: center;
+  background: #f5f9fd;
+  border: 1px solid #d3e0ec;
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  transition: filter 150ms ease, opacity 150ms ease, background-color 150ms ease;
+}
+
+.chart-difficulty {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chart-compact-label {
+  display: none;
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.chart-level {
+  font-size: 0.92rem;
+  font-weight: 850;
+  line-height: 1.1;
+}
+
+.chart-notes,
+.chart-empty-mark {
+  color: var(--text-muted);
+  font-size: 0.69rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.chart-cell-empty {
+  color: var(--text-muted);
+  background: #edf3f8;
+  border-top-color: #aab9c8;
+}
+
+.chart-cell-empty .chart-empty-mark {
+  grid-row: 2;
+}
+
+.difficulty-beginner { border-top-color: var(--diff-beginner); }
+.difficulty-beginner .chart-difficulty,
+.difficulty-beginner .chart-compact-label { color: var(--diff-beginner); }
+.difficulty-standard { border-top-color: var(--diff-standard); }
+.difficulty-standard .chart-difficulty,
+.difficulty-standard .chart-compact-label { color: var(--diff-standard); }
+.difficulty-hyper { border-top-color: var(--diff-hyper); }
+.difficulty-hyper .chart-difficulty,
+.difficulty-hyper .chart-compact-label { color: var(--diff-hyper); }
+.difficulty-another { border-top-color: var(--diff-another); }
+.difficulty-another .chart-difficulty,
+.difficulty-another .chart-compact-label { color: var(--diff-another); }
+.difficulty-leggendaria { border-top-color: var(--diff-leggendaria); }
+.difficulty-leggendaria .chart-difficulty,
+.difficulty-leggendaria .chart-compact-label { color: var(--diff-leggendaria); }
+
+.chart-cell.selected-false {
+  opacity: 0.34;
+  filter: grayscale(0.35);
+}
+
+.no-results {
+  padding: var(--space-xl);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  background: var(--bg-panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+}
+
+#navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) 0 var(--space-lg);
+}
+
+#navigation button {
+  min-width: 38px;
+  min-height: 34px;
+  padding: 5px 12px;
+  color: var(--bg-chrome);
+  font-size: 0.875rem;
+  font-weight: 800;
+  background: var(--bg-panel-strong);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, opacity 150ms ease;
+}
+
+#navigation button:hover:not(:disabled) {
+  color: #ffffff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+#navigation button:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+
+#page-info {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 650;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.song-card:nth-child(1) { animation-delay: 0ms; }
+.song-card:nth-child(2) { animation-delay: 20ms; }
+.song-card:nth-child(3) { animation-delay: 40ms; }
+.song-card:nth-child(4) { animation-delay: 60ms; }
+.song-card:nth-child(5) { animation-delay: 80ms; }
+.song-card:nth-child(n + 6) { animation-delay: 100ms; }
