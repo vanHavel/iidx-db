@@ -11,17 +11,50 @@ export function updateNav(page, pageSize, totalCount) {
     document.getElementById('totalCount').textContent = `${totalCount}`;
 }
 
-const difficultyColors = {
-    beginner: "text-success",
-    standard: "text-primary",
-    hyper: "text-warning",
-    another: "text-danger",
-    leggendaria: "text-legg",
+const difficulties = [
+    'beginner',
+    'standard',
+    'hyper',
+    'another',
+    'leggendaria',
+];
+
+const difficultyLabels = {
+    beginner: 'B',
+    standard: 'N',
+    hyper: 'H',
+    another: 'A',
+    leggendaria: 'L',
 };
 
-function renderChart(chart) {
-    if (!chart) return "/";
-    return `<b>Lv.${chart.level}</b> (${chart.note_count})`;
+const difficultyNames = {
+    beginner: 'Beginner',
+    standard: 'Normal',
+    hyper: 'Hyper',
+    another: 'Another',
+    leggendaria: 'Leggendaria',
+};
+
+function renderChart(chart, difficulty, isSingle, searchParams) {
+    if (!chart) {
+        return `
+          <div class="chart-cell chart-cell-empty difficulty-${difficulty}">
+            <span class="chart-difficulty">${difficultyNames[difficulty]}</span>
+            <span class="chart-compact-label">${difficultyLabels[difficulty]} -</span>
+            <span class="chart-empty-mark">-</span>
+          </div>
+        `;
+    }
+
+    const isSelected = isChartSelected(isSingle, difficulty, chart.level, searchParams);
+    return `
+      <div class="chart-cell difficulty-${difficulty} selected-${isSelected}">
+        <span class="chart-difficulty">${difficultyNames[difficulty]}</span>
+        <span class="chart-compact-label">${difficultyLabels[difficulty]} Lv.${chart.level}</span>
+        <span class="chart-level">Lv.${chart.level}</span>
+        <span class="chart-notes">${chart.note_count} notes</span>
+      </div>
+    `;
 }
 
 function isChartSelected(isSingle, difficulty, level, searchParams) {
@@ -40,57 +73,78 @@ function isChartSelected(isSingle, difficulty, level, searchParams) {
     return true;
 }
 
+function renderChartGroup(label, chartCollection, isSingle, searchParams) {
+    return `
+      <section class="chart-group" aria-label="${label} charts">
+        <div class="chart-group-label">${label}</div>
+        <div class="chart-cells">
+          ${difficulties.map((difficulty) => renderChart(chartCollection?.[difficulty], difficulty, isSingle, searchParams)).join('')}
+        </div>
+      </section>
+    `;
+}
+
+function renderUnlock(unlockType) {
+    if (!unlockType) return 'Unknown';
+    return unlockType.charAt(0).toUpperCase() + unlockType.slice(1);
+}
+
+function renderBpm(song) {
+    return song.min_bpm === song.max_bpm ? `${song.min_bpm}` : `${song.min_bpm}-${song.max_bpm}`;
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function escapeAttribute(value) {
+    return escapeHtml(value);
+}
+
 export function renderSongInfo(songIds, songInfo, searchParams) {
     if (!songIds || songIds.length === 0) {
-        return `<tr><td colspan="8" class="text-center">No songs found</td></tr>`;
+        return `<div class="no-results">No songs found.</div>`;
     }
 
     return songIds
         .map((id) => {
             const song = songInfo[id];
+            if (!song) return '';
+
             const title = song.japaneseTitle || song.englishTitle;
-            const unlock = song.unlock_type.charAt(0).toUpperCase() + song.unlock_type.slice(1);
-            const bpm = song.min_bpm === song.max_bpm ? `${song.min_bpm}` : `${song.min_bpm}~${song.max_bpm}`;
-            const stripeClass = songIds.indexOf(id) % 2 === 0 ? "tr-striped" : "";
-
-            function generateChartCells(chartCollection, isSingle, searchParams) {
-                return Object.keys(difficultyColors)
-                    .map((difficulty) => {
-                        const chart = chartCollection?.[difficulty];
-                        const isSelected = chart ? isChartSelected(isSingle, difficulty, chart.level, searchParams) : false;
-                        return `<td class="${difficultyColors[difficulty]} chart-cell selected-${isSelected}">${renderChart(chart)}</td>`;
-                    })
-                    .join("");
-            }
-
+            const bpm = renderBpm(song);
+            const unlock = renderUnlock(song.unlock_type);
 
             return `
-            <tr class="${stripeClass} song-separator">
-              <td class="song-image-cell" rowspan="3">
-                <div
-                  class="song-image"
-                  style="background-image: url('/img/${song.folder}.webp')"
-                  role="img"
-                  aria-label="${title}"
-                ></div>
-              </td>
-              <td class="song-info" rowspan="3">
-                <div class="song-title">${title}</div>
-                <div class="text-muted fst-italic song-artist">${song.artist}</div>
-                <div class="text-muted song-genre">${song.genre}</div>
-              </td>
-              <td colspan="5" class="song-meta-label bpm-info">BPM: ${bpm}</td>
-              <td class="song-meta-label unlock-info chart-cell">Unlock: ${unlock}</td>
-            </tr>
-            <tr class="${stripeClass} chart-row">
-              <td class="chart-section-label">SP:</td>
-              ${generateChartCells(song.single, true, searchParams)}
-            </tr>
-            <tr class="${stripeClass} chart-row">
-              <td class="chart-section-label">DP:</td>
-              ${generateChartCells(song.double, false, searchParams)}
-            </tr>
+              <article class="song-card" data-song-id="${escapeAttribute(id)}">
+                <div class="song-info">
+                  <div
+                    class="song-image"
+                    style="background-image: url('/img/${escapeAttribute(song.folder)}.webp')"
+                    role="img"
+                    aria-label="${escapeAttribute(title)}"
+                  ></div>
+                  <div class="song-meta">
+                    <h3 class="song-title">${escapeHtml(title)}</h3>
+                    <div class="song-artist">${escapeHtml(song.artist)}</div>
+                    <div class="song-genre">${escapeHtml(song.genre)}</div>
+                    <div class="song-details">
+                      <span>BPM ${escapeHtml(bpm)}</span>
+                      <span>${escapeHtml(unlock)}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="song-charts">
+                  ${renderChartGroup('SP', song.single, true, searchParams)}
+                  ${renderChartGroup('DP', song.double, false, searchParams)}
+                </div>
+              </article>
             `;
         })
-        .join("");
+        .join('');
 }
