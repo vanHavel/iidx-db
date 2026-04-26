@@ -146,15 +146,21 @@
               <label for="order">Order By</label>
               <select id="order" name="order">
                 <option value="title">Title</option>
-                <option value="level_asc">Level (Lowest)</option>
-                <option value="level_desc">Level (Highest)</option>
-                <option value="BPM_asc">BPM (Increasing)</option>
-                <option value="BPM_desc">BPM (Decreasing)</option>
-                <option value="note_asc">Note Count (Increasing)</option>
-                <option value="note_desc">Note Count (Decreasing)</option>
+                <option value="level">Level</option>
+                <option value="BPM">BPM</option>
+                <option value="note">Note Count</option>
               </select>
             </div>
             <div class="search-actions">
+              <button
+                type="button"
+                id="sort-direction"
+                class="sort-toggle"
+                data-direction="asc"
+                aria-label="Sort ascending"
+              >
+                ↑ First
+              </button>
               <button type="button" id="search" class="search-button">Search</button>
             </div>
           </div>

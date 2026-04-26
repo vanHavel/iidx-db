@@ -22,7 +22,10 @@ function getQueryParams() {
             }
         }
     }
-    const sort = mappings['order'][document.getElementById('order').value];
+    const order = document.getElementById('order').value;
+    const sortDirectionButton = document.getElementById('sort-direction');
+    const direction = sortDirectionButton.dataset.direction === 'desc' ? 'desc' : 'asc';
+    const sort = mappings['order'][`${order}_${direction}`];
     return [params, sort];
 }
 
@@ -54,6 +57,47 @@ document.getElementById('search').addEventListener('click', async (e) => {
     [searchParams, sort] = getQueryParams();
     await search()
 });
+
+function getSortLabels(field) {
+    switch (field) {
+        case 'BPM':
+        case 'level':
+            return ['↑ Lowest', '↓ Highest'];
+        case 'note':
+            return ['↑ Fewest', '↓ Most'];
+        default:
+            return ['↑ First', '↓ Last'];
+    }
+}
+
+function updateSortButton() {
+    const button = document.getElementById('sort-direction');
+    const field = document.getElementById('order').value;
+    const direction = button.dataset.direction === 'desc' ? 'desc' : 'asc';
+    const [ascLabel, descLabel] = getSortLabels(field);
+    const label = direction === 'asc' ? ascLabel : descLabel;
+    button.textContent = label;
+    button.setAttribute('aria-label', `Sort ${direction === 'asc' ? 'ascending' : 'descending'}`);
+}
+
+document.getElementById('sort-direction').addEventListener('click', async () => {
+    const button = document.getElementById('sort-direction');
+    button.dataset.direction = button.dataset.direction === 'asc' ? 'desc' : 'asc';
+    updateSortButton();
+    page = 1;
+    [searchParams, sort] = getQueryParams();
+    await search();
+});
+
+document.getElementById('order').addEventListener('change', async () => {
+    updateSortButton();
+    page = 1;
+    [searchParams, sort] = getQueryParams();
+    await search();
+});
+
+updateSortButton();
+
 // hitting enter in the search input should trigger the search
 for (const field of ['title', 'artist', 'genre']) {
     document.getElementById(field).addEventListener('keydown', function(event) {

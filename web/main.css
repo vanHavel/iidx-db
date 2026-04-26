@@ -176,7 +176,7 @@ button {
 
 .controller-motif {
   position: absolute;
-  top: 20px;
+  top: 12px;
   right: 22px;
   z-index: 1;
   width: 286px;
@@ -311,23 +311,45 @@ button {
   grid-column: 3;
   display: flex;
   align-items: end;
+  gap: var(--space-sm);
+}
+
+.sort-toggle,
+.search-button {
+  min-height: 42px;
+  padding: 9px var(--space-lg);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: filter 150ms ease, transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.sort-toggle {
+  width: 124px;
+  flex: 0 0 124px;
+  color: var(--bg-chrome);
+  background: #f8fbff;
+  border: 1px solid #bed0e3;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+  white-space: nowrap;
+}
+
+.sort-toggle:hover {
+  border-color: var(--accent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    0 6px 16px rgba(11, 119, 217, 0.12);
 }
 
 .search-button {
   width: 100%;
-  min-height: 42px;
-  padding: 9px var(--space-lg);
   color: #ffffff;
-  font-weight: 800;
-  letter-spacing: 0.02em;
   background:
     linear-gradient(180deg, #1689e3, #0b63bf);
-  border-radius: var(--radius-sm);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.28),
     0 8px 20px rgba(11, 119, 217, 0.22);
-  cursor: pointer;
-  transition: filter 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
 
 .search-button:hover {
@@ -337,6 +359,7 @@ button {
     0 10px 24px rgba(11, 119, 217, 0.28);
 }
 
+.sort-toggle:active,
 .search-button:active {
   transform: translateY(1px);
 }
@@ -683,6 +706,7 @@ button {
 
   .search-actions {
     grid-column: auto;
+    align-items: stretch;
   }
 
   .song-card {
